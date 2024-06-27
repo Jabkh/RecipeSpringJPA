@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Search Results</title>
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h1>Search Results</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Instructions</th>
+            <th>Categories</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="recipe : ${recipes}">
+            <td th:text="${recipe.id}"></td>
+            <td th:text="${recipe.name}"></td>
+            <td th:text="${recipe.instructions}"></td>
+            <td><span th:each="category : ${recipe.categories}" th:text="${category.categoryName} + ' '"></span></td>
+            <td>
+                <a th:href="@{/recipes/{id}(id=${recipe.id})}" class="btn btn-info">View</a>
+                <a th:href="@{/recipes/edit/{id}(id=${recipe.id})}" class="btn btn-warning">Edit</a>
+                <form th:action="@{/recipes/delete/{id}(id=${recipe.id})}" th:method="post" style="display:inline;">
+                    <input type="submit" value="Delete" class="btn btn-danger">
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a href="/static" class="btn btn-primary">Back to Home</a>
+</div>
+
+<!-- Add Bootstrap JS and its dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
